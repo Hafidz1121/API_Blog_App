@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
+    public function myPosts() {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $user = Auth::user();
+
+        return response()->json([
+            'success' => true,
+            'posts' => $posts,
+            'user' => $user
+        ]);
+    }
+
     public function posts() {
         $posts = Post::orderBy('id', 'desc')->get();
 

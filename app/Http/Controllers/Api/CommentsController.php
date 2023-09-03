@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
 use App\Models\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,7 +18,7 @@ class CommentsController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $comments
+            'comments' => $comments
         ]);
     }
     
@@ -29,9 +28,11 @@ class CommentsController extends Controller
         $comment->post_id = $request->id;
         $comment->comment = $request->comment;
         $comment->save();
+        $comment->user;
 
         return response()->json([
             'success' => true,
+            'comment' => $comment,
             'message' => 'comment added'
         ]);
     }
@@ -58,7 +59,7 @@ class CommentsController extends Controller
     public function delete(Request $request) {
         $comment  = Comment::find($request->id);
 
-        if ($comment->id != Auth::user()->id) {
+        if ($comment->user_id != Auth::user()->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'unauthorize access'

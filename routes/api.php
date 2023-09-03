@@ -29,6 +29,7 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::post('save_user', [AuthController::class, 'saveUser'])->middleware('jwtAuth');
 
 // For Post
+Route::get('posts/my_post', [PostsController::class, 'myPosts'])->middleware('jwtAuth');
 Route::get('posts', [PostsController::class, 'posts'])->middleware('jwtAuth');
 Route::post('posts/create', [PostsController::class, 'create'])->middleware('jwtAuth');
 Route::post('posts/update', [PostsController::class, 'update'])->middleware('jwtAuth');
